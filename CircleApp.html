@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Circle Drawing Application Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+        img {
+            margin: 10px 0;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Circle Drawing Application</h1>
+    <h2>Source Code</h2>
+    <pre><code>
+package circleapp;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class CircleApp extends JFrame {
+    private static final long serialVersionUID = 1L;
+    private DrawPanel drawPanel;
+
+    public CircleApp() {
+        setTitle("Circle Drawing Application");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        drawPanel = new DrawPanel();
+        add(drawPanel);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(CircleApp::new);
+    }
+}
+
+class DrawPanel extends JPanel {
+    public DrawPanel() {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                String radiusStr = showInputDialog("Enter radius of the circle:");
+                if (radiusStr != null && !radiusStr.isEmpty()) {
+                    int radius = Integer.parseInt(radiusStr);
+                    drawCircle(x, y, radius);
+                }
+            }
+        });
+    }
+
+    private String showInputDialog(String message) {
+        JTextField inputField = new JTextField(10);
+        JPanel panel = new JPanel();
+        panel.add(new JLabel(message));
+        panel.add(inputField);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Input", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            return inputField.getText();
+        } else {
+            return null;
+        }
+    }
+
+    protected void drawCircle(int x, int y, int radius) {
+        Graphics g = getGraphics();
+        g.drawOval(x - radius, y - radius, 2 * radius, 2 * radius);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+       
+    }
+}
+
+    </code></pre>
+    <h2>Run Results</h2>
+    <p>Screenshots</p>
+<img src="SS6.png" alt="Screenshot 1">
+<img src="SS1.png" alt="Screenshot 2">
+<img src="SS2.png" alt="Screenshot 3">
+<img src="SS3.png" alt="Screenshot 4">
+<img src="SS4.png" alt="Screenshot 5">
+<img src="SS5.png" alt="Screenshot 6">
+
+</body>
+</html>
